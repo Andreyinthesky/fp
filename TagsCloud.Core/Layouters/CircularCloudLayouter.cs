@@ -22,16 +22,11 @@ namespace TagsCloud.Core.Layouters
                 .GetEnumerator();
         }
 
-        //public Spiral CreateSpiral()
-        //{
-
-        //}
-
         public Rectangle PutNextRectangle(Size rectangleSize)
         {
             if (rectangleSize.Width <= 0 || rectangleSize.Height <= 0)
             {
-                throw new ArgumentException($"{nameof(rectangleSize)} must have only positive values: {rectangleSize}");
+                throw new ArgumentException($"{nameof(rectangleSize)} must have only positive values, but was: {rectangleSize}");
             }
 
             var newRectangle = GenerateRectangle(rectangleSize);

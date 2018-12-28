@@ -2,6 +2,7 @@
 using System.Linq;
 using TagsCloud.Core.WordConverters;
 using TagsCloud.Core.WordFilters;
+using TagsCloud.ErrorHandling;
 
 namespace TagsCloud.Core
 {
@@ -16,11 +17,15 @@ namespace TagsCloud.Core
             this.textSplitter = textSplitter;
         }
 
-        public IEnumerable<string> Process(string text)
+        public Result<IEnumerable<string>> Process(string text)
         {
-            var words = textSplitter.Map(text);
-            return converters
-                .Aggregate(words, (convertedWords, converter) => convertedWords.Select(converter.ConvertWord));
+            return Result.Of(() => textSplitter.Map(text))
+                .Then
+                (
+                    words => converters
+                        .Aggregate(words, (convertedWords, converter) => convertedWords.Select(converter.ConvertWord))
+                )
+                .RefineError("Cannot preprocess text");
         }
     }
 }

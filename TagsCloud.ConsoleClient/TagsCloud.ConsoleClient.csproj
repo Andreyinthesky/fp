@@ -47,7 +47,10 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleAppSettings.cs" />
+    <Compile Include="ConsoleUi.cs" />
     <Compile Include="ContainerBuilder.cs" />
+    <Compile Include="IUserInterface.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -60,6 +63,10 @@
     <ProjectReference Include="..\TagsCloud.Core\TagsCloud.Core.csproj">
       <Project>{8724074a-2e62-4c36-af0f-9bec0681190a}</Project>
       <Name>TagsCloud.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TagsCloud.ErrorHandling\TagsCloud.ErrorHandling.csproj">
+      <Project>{7828CC43-BD53-475C-8503-C83AA61E3CEB}</Project>
+      <Name>TagsCloud.ErrorHandling</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

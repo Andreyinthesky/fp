@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using TagsCloud.Core.FileReaders;
 using TagsCloud.Core.Settings;
+using TagsCloud.ErrorHandling;
 
-namespace TagsCloud.Core
+namespace TagsCloud.Core.Providers
 {
-    public class StopWordsProvider : IProvider
+    public class StopWordsProvider : IProvider<IEnumerable<string>>
     {
         private readonly CloudSettings cloudSettings;
         private readonly ITextFileReader fileReader;
@@ -17,10 +18,12 @@ namespace TagsCloud.Core
             this.textPreprocessor = textPreprocessor;
         }
 
-        public IEnumerable<string> Get()
+        public Result<IEnumerable<string>> Get()
         {
-            var text = fileReader.ReadText(cloudSettings.InputStopWordsFilePath);
-            return textPreprocessor.Process(text);
+            return fileReader
+                .ReadText(cloudSettings.InputStopWordsFilePath)
+                .Then(text => textPreprocessor.Process(text))
+                .RefineError("Cannot provide stop words");
         }
     }
 }

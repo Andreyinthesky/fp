@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TagsCloud.Core.Providers;
 
 namespace TagsCloud.Core.WordFilters
 {
     public class StopWordFilter : IWordFilter
     {
-        private readonly IProvider stopWordsProvider;
+        private readonly IProvider<IEnumerable<string>> stopWordsProvider;
         private HashSet<string> stopWords;
 
-        public StopWordFilter(IProvider stopWordsProvider)
+        public StopWordFilter(IProvider<IEnumerable<string>> stopWordsProvider)
         {
             this.stopWordsProvider = stopWordsProvider;
         }
@@ -25,7 +26,10 @@ namespace TagsCloud.Core.WordFilters
 
         private HashSet<string> GetStopWords()
         {
-            return stopWordsProvider.Get().ToHashSet();
+            return stopWordsProvider
+                .Get()
+                .GetValueOrThrow()
+                .ToHashSet();
         }
     }
 }

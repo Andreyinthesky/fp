@@ -1,7 +1,9 @@
-﻿namespace TagsCloud.Core.FileReaders
+﻿using TagsCloud.ErrorHandling;
+
+namespace TagsCloud.Core.FileReaders
 {
     public interface ITextFileReader
     {
-        string ReadText(string filePath);
+        Result<string> ReadText(string filePath);
     }
 }

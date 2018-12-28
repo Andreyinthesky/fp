@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Linq;
 using TagsCloud.Core.Settings;
+using TagsCloud.ErrorHandling;
 
 namespace TagsCloud.Core
 {
@@ -15,29 +16,40 @@ namespace TagsCloud.Core
             CloudSettings = cloudSettings;
         }
 
-        public Bitmap GetCloudImage()
+        public Result<Bitmap> GetCloudImage()
         {
             var imageSettings = CloudSettings.ImageSettings;
-            var tagsCloud = TagsCloudCreator
-                .CreateTagsCloud(CloudSettings.InputTextFilePath, CloudSettings.FontSettings);
             var image = new Bitmap(imageSettings.Width, imageSettings.Height);
             var graphics = Graphics.FromImage(image);
-            DrawTags(imageSettings, tagsCloud, graphics, CloudSettings.WordsCount);
-            return image;
+
+            return TagsCloudCreator
+                .CreateTagsCloud(CloudSettings.InputTextFilePath, CloudSettings.FontSettings)
+                .Then(tagsCloud => DrawTags(imageSettings, tagsCloud, graphics, CloudSettings.WordsCount))
+                .Then(_ => image)
+                .RefineError("Failed to create tags cloud image");
         }
 
-        private void DrawTags(ImageSettings imageSettings, TagsCloud tagsCloud, Graphics graphics, int tagsCount)
+        private Result<None> DrawTags(ImageSettings imageSettings, TagsCloud tagsCloud, Graphics graphics, int tagsCount)
         {
             graphics.FillRectangle(new SolidBrush(imageSettings.BackgroundColor), 0, 0, imageSettings.Width, imageSettings.Height);
+            var imageSize = new Size(imageSettings.Width, imageSettings.Height);
 
             foreach (var tag in tagsCloud.Tags.Take(tagsCount))
             {
                 var shiftedRectangle = ShiftRectangleToImageCenter(
                     tagsCloud,
                     tag.Rectangle, 
-                    new Size(imageSettings.Width, imageSettings.Height));
+                    imageSize);
+
+                if (!RectangleIsInImageRange(shiftedRectangle, imageSize))
+                {
+                    return Result.Fail<None>("Tag cloud are out of image, enlarge image size or reduce tags count");
+                }
+
                 graphics.DrawString(tag.Text, tag.Font, new SolidBrush(imageSettings.ForegroundColor), shiftedRectangle);
             }
+
+            return Result.Ok();
         }
 
         private Rectangle ShiftRectangleToImageCenter(TagsCloud tagsCloud, Rectangle rectangle, Size imageSize)
@@ -45,6 +57,14 @@ namespace TagsCloud.Core
             var newX = rectangle.X + tagsCloud.Center.X + imageSize.Width / 2;
             var newY = rectangle.Y + tagsCloud.Center.Y + imageSize.Height / 2;
             return new Rectangle(newX, newY, rectangle.Width, rectangle.Height);
+        }
+
+        private bool RectangleIsInImageRange(Rectangle rectangle, Size imageSize)
+        {
+            return rectangle.Left >= 0 
+                && rectangle.Top >= 0                      
+                && rectangle.Right <= imageSize.Width 
+                && rectangle.Bottom <= imageSize.Height;
         }
     }
 }

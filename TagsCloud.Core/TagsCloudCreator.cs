@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using TagsCloud.Core.FileReaders;
 using TagsCloud.Core.Layouters;
+using TagsCloud.Core.Providers;
 using TagsCloud.Core.Settings;
-using TagsCloud.Core.WordFilters;
+using TagsCloud.ErrorHandling;
 
 namespace TagsCloud.Core
 {
@@ -14,29 +14,37 @@ namespace TagsCloud.Core
     {
         private readonly ICloudLayouter layouter;
         private readonly IFrequencyWordsAnalyzer wordsAnalyzer;
-        private readonly ITextFileReader textFileReader;
-        private readonly ITextPreprocessor preprocessor;
+        private readonly IProvider<IEnumerable<string>> sourceWordsProvider;
 
         public TagsCloudCreator(ICloudLayouter layouter,
-            ITextFileReader textFileReader,
             IFrequencyWordsAnalyzer wordsAnalyzer,
-            ITextPreprocessor preprocessor
+            IProvider<IEnumerable<string>> sourceWordsProvider
             )
         {
             this.layouter = layouter;
             this.wordsAnalyzer = wordsAnalyzer;
-            this.textFileReader = textFileReader;
-            this.preprocessor = preprocessor;
+            this.sourceWordsProvider = sourceWordsProvider;
         }
 
-        public TagsCloud CreateTagsCloud(string textFilePath, FontSettings fontSettings)
+        public Result<TagsCloud> CreateTagsCloud(string textFilePath, FontSettings fontSettings)
+        {
+            return sourceWordsProvider.Get()
+                .Then
+                (
+                    words => wordsAnalyzer
+                        .Analyze(words)
+                        .OrderByDescending(kvp => kvp.Value)
+                        .ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
+                )
+                .Then(frequencyByWord => GetTags(frequencyByWord, fontSettings))
+                .Then(tags => new TagsCloud(tags, layouter.CloudWidth, layouter.CloudHeight, layouter.Center))
+                .RefineError("Cannot create tags cloud");
+        }
+
+        private IEnumerable<Tag> GetTags(Dictionary<string, int> frequencyByWord, FontSettings fontSettings)
         {
             var tags = new List<Tag>();
-            var text = textFileReader.ReadText(textFilePath);
-            var frequencyByWord = wordsAnalyzer.Analyze(preprocessor.Process(text))
-                .OrderByDescending(kvp => kvp.Value)
-                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            var minFrequency = frequencyByWord.Values.Min(); 
+            var minFrequency = frequencyByWord.Values.Min();
             var maxFrequency = frequencyByWord.Values.Max();
 
             foreach (var weightedWord in frequencyByWord)
@@ -49,7 +57,7 @@ namespace TagsCloud.Core
                 tags.Add(new Tag(weightedWord.Key, font, frame));
             }
 
-            return new TagsCloud(tags, layouter.CloudWidth, layouter.CloudHeight, layouter.Center);
+            return tags;
         }
 
         private int GetFontSize(FontSettings fontSettings, int currentFrequency, int minFrequency, int maxFrequency)

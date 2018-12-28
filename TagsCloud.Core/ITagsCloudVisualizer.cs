@@ -1,9 +1,10 @@
 ﻿using System.Drawing;
+using TagsCloud.ErrorHandling;
 
 namespace TagsCloud.Core
 {
     public interface ITagsCloudVisualizer
     {
-        Bitmap GetCloudImage();
+        Result<Bitmap> GetCloudImage();
     }
 }
