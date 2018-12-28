@@ -7,11 +7,11 @@ namespace TagsCloud.Core.Providers
 {
     public class SourceWordsProvider : IProvider<IEnumerable<string>>
     {
-        private readonly CloudSettings cloudSettings;
+        private readonly ICloudSettings cloudSettings;
         private readonly ITextFileReader fileReader;
         private readonly ITextPreprocessor textPreprocessor;
 
-        public SourceWordsProvider(CloudSettings cloudSettings, ITextFileReader fileReader, ITextPreprocessor textPreprocessor)
+        public SourceWordsProvider(ICloudSettings cloudSettings, ITextFileReader fileReader, ITextPreprocessor textPreprocessor)
         {
             this.cloudSettings = cloudSettings;
             this.fileReader = fileReader;

@@ -8,9 +8,9 @@ namespace TagsCloud.Core
     public class TagsCloudVisualizer : ITagsCloudVisualizer
     {
         public ITagsCloudCreator TagsCloudCreator { get; }
-        public CloudSettings CloudSettings { get; }
+        public ICloudSettings CloudSettings { get; }
 
-        public TagsCloudVisualizer(ITagsCloudCreator tagsCloudCreator, CloudSettings cloudSettings)
+        public TagsCloudVisualizer(ITagsCloudCreator tagsCloudCreator, ICloudSettings cloudSettings)
         {
             TagsCloudCreator = tagsCloudCreator;
             CloudSettings = cloudSettings;
@@ -29,7 +29,7 @@ namespace TagsCloud.Core
                 .RefineError("Failed to create tags cloud image");
         }
 
-        private Result<None> DrawTags(ImageSettings imageSettings, TagsCloud tagsCloud, Graphics graphics, int tagsCount)
+        private Result<None> DrawTags(IImageSettings imageSettings, TagsCloud tagsCloud, Graphics graphics, int tagsCount)
         {
             graphics.FillRectangle(new SolidBrush(imageSettings.BackgroundColor), 0, 0, imageSettings.Width, imageSettings.Height);
             var imageSize = new Size(imageSettings.Width, imageSettings.Height);

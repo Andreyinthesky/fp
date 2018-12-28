@@ -4,8 +4,9 @@ namespace TagsCloud.Core.Settings
 {
     public interface IImageSettings
     {
-        int Width { get; set; }
-        int Height { get; set; }
+        int Width { get; }
+        int Height { get; }
+        Size Size { get; set; }
         Color ForegroundColor { get; set; }
         Color BackgroundColor { get; set; }
     }

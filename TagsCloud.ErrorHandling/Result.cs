@@ -19,7 +19,7 @@ namespace TagsCloud.ErrorHandling
         {
             if (IsSuccess)
                 return Value;
-            throw new InvalidOperationException($"No value. Only Error {Error}");
+            throw new InvalidOperationException($"No value. Only Error: {Error}");
         }
 
         public bool IsSuccess => Error == null;

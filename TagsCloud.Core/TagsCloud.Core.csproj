@@ -51,7 +51,7 @@
     <Compile Include="Providers\SourceWordsProvider.cs" />
     <Compile Include="Providers\StopWordsProvider.cs" />
     <Compile Include="WordConverters\BasicFormWordConverter.cs" />
-    <Compile Include="WordFilters\IMapper.cs" />
+    <Compile Include="IMapper.cs" />
     <Compile Include="Layouters\CircularCloudLayouter.cs" />
     <Compile Include="Layouters\ISpiral.cs" />
     <Compile Include="Settings\FontSettings.cs" />
@@ -73,7 +73,7 @@
     <Compile Include="WordConverters\IWordConverter.cs" />
     <Compile Include="WordFilters\IWordFilter.cs" />
     <Compile Include="WordFilters\StopWordFilter.cs" />
-    <Compile Include="WordFilters\TextSplitter.cs" />
+    <Compile Include="TextSplitter.cs" />
     <Compile Include="WordConverters\ToLowerConverter.cs" />
     <Compile Include="TextPreprocessor.cs" />
   </ItemGroup>

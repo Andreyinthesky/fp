@@ -5,6 +5,6 @@ namespace TagsCloud.Core
 {
     public interface ITagsCloudCreator
     {
-        Result<TagsCloud> CreateTagsCloud(string textFilePath, FontSettings fontSettings);
+        Result<TagsCloud> CreateTagsCloud(string textFilePath, IFontSettings fontSettings);
     }
 }

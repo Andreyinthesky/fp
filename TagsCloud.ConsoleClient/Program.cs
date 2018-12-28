@@ -10,7 +10,7 @@
         {
             var container = new ContainerBuilder().Build();
             var ui = container.Resolve<IUserInterface>();
-            ui.Run();
+            ui.Run(args);
         }
     }
 }

@@ -62,7 +62,7 @@ namespace TagsCloud.ConsoleClient
             container.Register(Component.For<IFontSettings>()
                 .ImplementedBy<FontSettings>());
 
-            container.Register(Component.For<CloudSettings>()
+            container.Register(Component.For<ICloudSettings>()
                 .ImplementedBy<CloudSettings>());
 
             container.Register(Component.For<ITagsCloudCreator>()

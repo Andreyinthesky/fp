@@ -1,4 +1,4 @@
-﻿namespace TagsCloud.Core.WordFilters
+﻿namespace TagsCloud.Core
 {
     public interface IMapper<in T, out TOut>
     {

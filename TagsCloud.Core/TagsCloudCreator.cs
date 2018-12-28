@@ -16,7 +16,8 @@ namespace TagsCloud.Core
         private readonly IFrequencyWordsAnalyzer wordsAnalyzer;
         private readonly IProvider<IEnumerable<string>> sourceWordsProvider;
 
-        public TagsCloudCreator(ICloudLayouter layouter,
+        public TagsCloudCreator(
+            ICloudLayouter layouter,
             IFrequencyWordsAnalyzer wordsAnalyzer,
             IProvider<IEnumerable<string>> sourceWordsProvider
             )
@@ -26,7 +27,7 @@ namespace TagsCloud.Core
             this.sourceWordsProvider = sourceWordsProvider;
         }
 
-        public Result<TagsCloud> CreateTagsCloud(string textFilePath, FontSettings fontSettings)
+        public Result<TagsCloud> CreateTagsCloud(string textFilePath, IFontSettings fontSettings)
         {
             return sourceWordsProvider.Get()
                 .Then
@@ -41,17 +42,20 @@ namespace TagsCloud.Core
                 .RefineError("Cannot create tags cloud");
         }
 
-        private IEnumerable<Tag> GetTags(Dictionary<string, int> frequencyByWord, FontSettings fontSettings)
+        private IEnumerable<Tag> GetTags(Dictionary<string, int> frequencyByWord, IFontSettings fontSettings)
         {
             var tags = new List<Tag>();
+
+            if (!frequencyByWord.Values.Any())
+                return tags;
+
             var minFrequency = frequencyByWord.Values.Min();
             var maxFrequency = frequencyByWord.Values.Max();
 
             foreach (var weightedWord in frequencyByWord)
             {
                 var fontSize = GetFontSize(fontSettings, weightedWord.Value, minFrequency, maxFrequency);
-                var fontFamily = new FontFamily(fontSettings.TypeFace);
-                var font = new Font(fontFamily, fontSize, fontSettings.FontStyle, GraphicsUnit.Point);
+                var font = new Font(fontSettings.FontFamily, fontSize, fontSettings.FontStyle, GraphicsUnit.Point);
                 var frameSize = TextRenderer.MeasureText(weightedWord.Key, font);
                 var frame = layouter.PutNextRectangle(frameSize);
                 tags.Add(new Tag(weightedWord.Key, font, frame));
@@ -60,7 +64,7 @@ namespace TagsCloud.Core
             return tags;
         }
 
-        private int GetFontSize(FontSettings fontSettings, int currentFrequency, int minFrequency, int maxFrequency)
+        private int GetFontSize(IFontSettings fontSettings, int currentFrequency, int minFrequency, int maxFrequency)
         {
             var minFontSize = fontSettings.MinFontSizeInPoints;
             var maxFontSize = fontSettings.MaxFontSizeInPoints;

@@ -4,7 +4,7 @@ namespace TagsCloud.Core.Settings
 {
     public interface IFontSettings
     {
-        string TypeFace { get; set; }
+        FontFamily FontFamily { get; set; }
         FontStyle FontStyle { get; set; }
         int MinFontSizeInPoints { get; set; } 
         int MaxFontSizeInPoints { get; set; }

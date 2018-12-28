@@ -2,7 +2,7 @@
 using System.Linq;
 using TagsCloud.Core.Extensions;
 
-namespace TagsCloud.Core.WordFilters
+namespace TagsCloud.Core
 {
     public class TextSplitter : IMapper<string, IEnumerable<string>>
     {
