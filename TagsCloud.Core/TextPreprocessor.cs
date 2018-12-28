@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TagsCloud.Core.WordConverters;
-using TagsCloud.Core.WordFilters;
 using TagsCloud.ErrorHandling;
 
 namespace TagsCloud.Core

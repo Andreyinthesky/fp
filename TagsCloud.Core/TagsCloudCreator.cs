@@ -69,9 +69,12 @@ namespace TagsCloud.Core
             var minFontSize = fontSettings.MinFontSizeInPoints;
             var maxFontSize = fontSettings.MaxFontSizeInPoints;
 
-            return currentFrequency > minFrequency 
-                ? (int)Math.Ceiling((double)(maxFontSize * (currentFrequency - minFrequency))/(maxFrequency - minFrequency))
-                    + minFontSize
+            return currentFrequency > minFrequency
+                ? Math.Max
+                (
+                    (int) Math.Ceiling((double) maxFontSize * (currentFrequency - minFrequency) / (maxFrequency - minFrequency)),
+                    minFontSize
+                )
                 : minFontSize;
         }
     }

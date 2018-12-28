@@ -84,7 +84,7 @@ namespace TagsCloud.ConsoleClient
         private Result<ICloudSettings> SetImageSize(ICloudSettings settings, Size size)
         {
             settings.ImageSettings.Size = size;
-            return Validate(settings, x => IsImageSizeCorrect(x.ImageSettings.Size), "Size is incorrect");
+            return Validate(settings, x => IsImageSizeCorrect(x.ImageSettings.Size), $"Image size {size} is incorrect");
         }
 
         private Result<ICloudSettings> SetFontTypeFace(ICloudSettings settings, string typeFaceName)
