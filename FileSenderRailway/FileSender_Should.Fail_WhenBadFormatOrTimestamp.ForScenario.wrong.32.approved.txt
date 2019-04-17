@@ -1,1 +1,1 @@
-﻿Can't prepare file to send. Invalid format version
+﻿Can't send. This file is too old. Data of creation: 30.11.1999 0:00:00

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2019
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConwaysGameOfLife", "ConwaysGameOfLife\ConwaysGameOfLife.csproj", "{ACBC03B3-A778-4F66-9D6D-43C77D64CC23}"
 EndProject
@@ -12,6 +12,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Summator", "Samples\Summator\Summator.csproj", "{ADB55562-4353-4FC2-9486-E6C343C2F7F6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ErrorHandling", "ErrorHandling\ErrorHandling.csproj", "{C83B0A70-DBA6-45BF-A792-FD2B14528EBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloud.ConsoleClient", "TagsCloud.ConsoleClient\TagsCloud.ConsoleClient.csproj", "{07D6A52D-EC0F-420B-826B-34205E953BAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloud.Core", "TagsCloud.Core\TagsCloud.Core.csproj", "{8724074A-2E62-4C36-AF0F-9BEC0681190A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloud.Tests", "TagsCloud.Tests\TagsCloud.Tests.csproj", "{B2CC1ACA-D455-4021-8123-1B1A7FDA313A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagsCloud.ErrorHandling", "TagsCloud.ErrorHandling\TagsCloud.ErrorHandling.csproj", "{7828CC43-BD53-475C-8503-C83AA61E3CEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,11 +43,30 @@ Global
 		{C83B0A70-DBA6-45BF-A792-FD2B14528EBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C83B0A70-DBA6-45BF-A792-FD2B14528EBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C83B0A70-DBA6-45BF-A792-FD2B14528EBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07D6A52D-EC0F-420B-826B-34205E953BAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07D6A52D-EC0F-420B-826B-34205E953BAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07D6A52D-EC0F-420B-826B-34205E953BAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07D6A52D-EC0F-420B-826B-34205E953BAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8724074A-2E62-4C36-AF0F-9BEC0681190A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8724074A-2E62-4C36-AF0F-9BEC0681190A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8724074A-2E62-4C36-AF0F-9BEC0681190A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8724074A-2E62-4C36-AF0F-9BEC0681190A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2CC1ACA-D455-4021-8123-1B1A7FDA313A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2CC1ACA-D455-4021-8123-1B1A7FDA313A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2CC1ACA-D455-4021-8123-1B1A7FDA313A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2CC1ACA-D455-4021-8123-1B1A7FDA313A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7828CC43-BD53-475C-8503-C83AA61E3CEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7828CC43-BD53-475C-8503-C83AA61E3CEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7828CC43-BD53-475C-8503-C83AA61E3CEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7828CC43-BD53-475C-8503-C83AA61E3CEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{ADB55562-4353-4FC2-9486-E6C343C2F7F6} = {53B60782-5F18-4FD1-9FC0-A6F2474751CB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {63C9CE5E-DD18-48B3-8E64-47ED491B1948}
 	EndGlobalSection
 EndGlobal
